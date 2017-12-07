@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+   
+</head>
+
+<body>
+    <div style="width:360px;padding:30px">
+        <form id="userloginform" class="bs-example bs-example-form" role="form">
+            <div class="input-group">
+                <span class="input-group-addon">N</span>
+                <input name="username" type="text" class="form-control" value="baiyangby">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">P</span>
+                <input name="password" type="text" class="form-control" value="123456">
+            </div>
+            <br>
+            <button type="button" class="btn btn-default" id="login">登录测试</button>
+        </form>
+    </div>
+</body>
+<script>
+    (function ($) {
+        $("#login").on("click", function () {
+            var forms = $("#userloginform")
+           $.ajax({
+               url:'http://www.xunfengwx.com/login/login',
+               data:{
+                    account:'baiyang',
+                   password:'baiyangby311'
+               },
+               type: 'POST',
+               success: function(res){
+                  
+               }
+           })
+        })
+    })(jQuery)
+</script>
+
+</html>
