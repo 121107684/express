@@ -39,10 +39,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  cookie: {maxAge:Settings.cookietime},
-  secret: Settings.COOKIE_SECRET
-}));
+// app.use(session({
+//   cookie: {maxAge:Settings.cookietime},
+//   secret: Settings.COOKIE_SECRET
+// }));
 //文件上传
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -55,8 +55,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const cpUpload = upload.any();
 app.use(cpUpload);
-global.usersdb = require('./database/usersdb.js');
-global.db = mongoose.connect(Settings.URL);
+// global.usersdb = require('./database/usersdb.js');
+// global.db = mongoose.connect(Settings.URL);
 
 app.use('/', index);
 app.use('/login', login);
