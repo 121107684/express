@@ -3,6 +3,7 @@ const router = express.Router();
 
 router.post('/login',function(req,res,next){
     console.log(req.body);
+    console.log(2222);
     var User = global.usersdb.getModel('usertab');
     var userinfos = global.usersdb.getModel('userinfo');
     User.findOne({account:req.body.account},function(err,doc) {
