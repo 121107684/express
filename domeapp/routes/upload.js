@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.post('/upimg', function(req, res, next) {
+    console.log(req)
     var filed = req.files;
     console.log(filed)
     if(filed){

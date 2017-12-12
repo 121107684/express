@@ -14,6 +14,7 @@ const Settings = require('./database/settings');
 const index = require('./routes/index');
 const login = require('./routes/login');
 const users = require('./routes/users');
+const uploadfile = require('./routes/upload');
 
 const app = express(mongoose);
 
@@ -61,6 +62,7 @@ app.use(cpUpload);
 app.use('/', index);
 app.use('/login', login);
 app.use('/users', users);
+app.use('/upload', uploadfile);
 
 
 
