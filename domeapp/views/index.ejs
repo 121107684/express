@@ -24,8 +24,13 @@
                 <span class="input-group-addon">P</span>
                 <input name="password" type="text" class="form-control" value="123456">
             </div>
+            <div class="input-group">
+                <span class="input-group-addon">Img</span>
+                <input name="password" type="file" class="form-control" id="userImg">
+            </div>
             <br>
             <button type="button" class="btn btn-default" id="login">登录测试</button>
+            <button type="button" class="btn btn-default" id="upload">上传文件</button>
         </form>
     </div>
 </body>
@@ -44,6 +49,24 @@
                   
                }
            })
+        })
+        $("#upload").on("click",function(){
+            var dataImg = new FormData();
+            console.log($("#userImg"))
+            dataImg.append("file", $("#userImg")[0].files[0]);
+            console.log($("#userImg")[0].files[0])
+            $.ajax({
+				type:"post",
+				url:"http://127.0.0.1:8088/uploadfile/upimg",
+				cache: false, 
+	            processData: false,  
+	            contentType: false,
+	           
+				data:dataImg,
+				success:function(data){
+					console.log("data"+data);
+				}
+			})
         })
     })(jQuery)
 </script>

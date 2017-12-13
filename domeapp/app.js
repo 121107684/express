@@ -37,32 +37,36 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser({uploadDir: './Upload'}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.all('*',function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  if (req.method == 'OPTIONS') {
+      res.send(200);
+  }
+  else {
+      next();
+  }
+});
 
 // app.use(session({
 //   cookie: {maxAge:Settings.cookietime},
 //   secret: Settings.COOKIE_SECRET
 // }));
 //文件上传
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/images/user')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-});
-const upload = multer({ storage: storage });
-const cpUpload = upload.any();
-app.use(cpUpload);
+app.use(multer({dest:'./uploadimgfile'}));
+
 // global.usersdb = require('./database/usersdb.js');
 // global.db = mongoose.connect(Settings.URL);
 
 app.use('/', index);
 app.use('/login', login);
 app.use('/users', users);
-app.use('/upload', uploadfile);
+app.use('/uploadfile', uploadfile);
 
 
 
