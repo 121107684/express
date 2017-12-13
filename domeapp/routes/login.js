@@ -2,10 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/login',function(req,res,next){
-    console.log(req.body);
+    console.log(req);
     console.log(2222);
     var User = global.usersdb.getModel('usertab');
-    var userinfos = global.usersdb.getModel('userinfo');
     User.findOne({account:req.body.account},function(err,doc) {
         if(err){
             var usererror ={"code":500, "text":"网络错误","path":"login"};

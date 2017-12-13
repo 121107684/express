@@ -24,10 +24,33 @@
                 <span class="input-group-addon">P</span>
                 <input name="password" type="text" class="form-control" value="123456">
             </div>
+            <div class="input-group">
+                <span class="input-group-addon">P</span>
+                <input name="password" id="imgfile" type="file" class="form-control" >
+            </div>
             <br>
             <button type="button" class="btn btn-default" id="login">登录测试</button>
+            <button type="button" class="btn btn-default" id="upload">上传</button>
         </form>
     </div>
+    <form action="/file_upload" method="post" enctype="multipart/form-data">
+<input type="file" name="image" size="50" />
+<br />
+<input type="submit" value="上传文件" />
+</form>
+
+
+<h1>demo of HTML5 form-data</h1>
+
+<form id="form-demo" enctype="multipart/form-data",action="javascript:">
+    <label for="id-txt">要传递的文本信息</label>
+    <input type="text" id="id-txt" name="name_txt"/>
+    <br><br>
+    <label for="id-file">选择上传的文件</label>
+    <input type="file" id="id-file" name="file" />
+    <br><br>
+    <button type="button" id="sub-btn">提交</button>
+</form>
 </body>
 <script>
     (function ($) {
@@ -45,6 +68,58 @@
                }
            })
         })
+        $("#upload").on("click",function(){
+            var formData = new FormData($('#imgfile')[0]);
+            //var myfile = document.getElementById('imgfile').files[0];
+            //formData.append("file",myfile) 
+            $.ajax({  
+          url: 'http://127.0.0.1:8088/file_upload' ,  
+          type: "POST",  
+                        data: formData,  
+                        processData: false,    
+                        contentType: false,  
+          success: function (returndata) {  
+              console.log(returndata);  
+          },  
+          error: function (returndata) {  
+              console.log(returndata);  
+          }  
+     });  
+        })
+         $("#sub-btn").on('click',function () {
+
+        /*
+              创建一个FormData对象,注意参数(可选) 一个HTML表单元素,
+              表单的信息都包含在了这个新的FromData对象中，可以在后台将它们取出:
+                    --文本信息用 req.body.nameOfElement取出，如req.body.name_txt;
+                    --文件信息用fs模块和path模块解析,后面会有实例
+         */
+        var formData = new FormData();
+        formData.append("file",document.getElementById('id-file').files[0])
+        //还可以用append方法添加一些附加信息参数为(name,value)，如下面的代码：
+        //formData.append('nickName','Jack');//-->后台用req.body.nickName将值'Jack'取出
+        console.log(document.getElementById('id-file').files[0])
+        $.ajax({
+            url: 'http://127.0.0.1:8088/fileupload',
+            type: 'POST',
+            data: formData,//<----要传输的数据
+            async: false,
+            cache: false,
+            timeout:100,
+            contentType: false,//<----头信息设置为false
+            processData: false,
+            success: function(data){
+                if(data.result === 'success'){
+                    alert("文件上传成功");
+                }else if(data.result === 'fail'){
+                    alert('文件上传失败：原因是' + data.reason);
+                }
+            },
+            error: function(xhr){
+                alert('文件上传失败：原因是' + xhr.status);
+            }
+        });//end ajax
+    });//end event
     })(jQuery)
 </script>
 
