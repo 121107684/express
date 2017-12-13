@@ -33,6 +33,24 @@
             <button type="button" class="btn btn-default" id="upload">上传文件</button>
         </form>
     </div>
+    <form action="/file_upload" method="post" enctype="multipart/form-data">
+<input type="file" name="image" size="50" />
+<br />
+<input type="submit" value="上传文件" />
+</form>
+
+
+<h1>demo of HTML5 form-data</h1>
+
+<form id="form-demo" enctype="multipart/form-data",action="javascript:">
+    <label for="id-txt">要传递的文本信息</label>
+    <input type="text" id="id-txt" name="name_txt"/>
+    <br><br>
+    <label for="id-file">选择上传的文件</label>
+    <input type="file" id="id-file" name="file" />
+    <br><br>
+    <button type="button" id="sub-btn">提交</button>
+</form>
 </body>
 <script>
     (function ($) {

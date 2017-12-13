@@ -3,6 +3,8 @@ var router = express.Router();
 var path= require("path")
 var fs = require('fs');
 
+
+
 /* GET home page. */
 router.post('/upimg', function(req, res, next) {
     

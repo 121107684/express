@@ -3,13 +3,15 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const multer = require('multer');
+
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
 const Settings = require('./database/settings');
 
+var multer  = require('multer');
+var fs = require("fs");
 
 const index = require('./routes/index');
 const login = require('./routes/login');
@@ -67,7 +69,6 @@ app.use('/', index);
 app.use('/login', login);
 app.use('/users', users);
 app.use('/uploadfile', uploadfile);
-
 
 
 // catch 404 and forward to error handler
