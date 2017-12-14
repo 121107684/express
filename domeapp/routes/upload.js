@@ -12,10 +12,10 @@ router.post('/upimg', function(req, res, next) {
     console.log(req)
     if(filed){
         var timestamp = Date.parse(new Date());//时间戳，凑活用了（注意少了八个时区);
-        var extension = req.files.file.extension;
-        var tmpPath = req.files.file.path;
+        var extension = filed.data.extension;
+        var tmpPath = filed.data.path;
         var basePath = path.dirname(__dirname);
-        var targetPath =basePath+'/public/Upload/'+timestamp+'.'+req.files.file.extension;
+        var targetPath =basePath+'/public/Upload/'+timestamp+'.'+filed.data.extension;
         fs.rename(tmpPath, targetPath,function(err) {
             if(err){
                 res.send({code: 200, msg:err});
@@ -25,7 +25,10 @@ router.post('/upimg', function(req, res, next) {
                     if(err) {
                         res.send({code: 200, msg:err});
                     }else{
-                        res.send({code: 200, msg:"成功"});
+                        var data = {
+                            img:'/Upload/'+timestamp+'.'+filed.data.extension                    
+                        }
+                        res.send({code: 200, msg:"成功",data:data});
                     }
                 })
             }
