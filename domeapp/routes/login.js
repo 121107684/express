@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const request = require('request');
 
 router.post('/login',function(req,res,next){
     console.log(req);
@@ -33,5 +34,15 @@ router.post('/login',function(req,res,next){
             }
         }
     });
+})
+router.get("/login",function(req,res,next){
+    console.log(req.query.jscode);
+    request('https://api.weixin.qq.com/sns/jscode2session?appid=wx7a539d4bb75b88a0&secret=3588f9f56cf48d44e6b56f91e46d0f37&js_code='+req.query.jscode+'&grant_type=authorization_code', function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+          console.log(body) // Show the HTML for the baidu homepage.
+        }
+        console.log(error, response, body)
+      })
+
 })
 module.exports = router;
