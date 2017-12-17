@@ -7,23 +7,29 @@
 //         confirmPassword:{type:String,required:true}
 //     }
 // }
-
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 module.exports ={
     usertab:{
-        account:{type:String,required:true,unique:true},
-        username:{type:String,required:true},
-        email:{type:String,required:true},
-        password:{type:String,required:true},
+        openid:{type:String,required:true,unique:true},
+        avatarUrl:{type:String,required:false},
+        city:{type:String,required:false},
+        country:{type:String,required:false},
+        gender:{type:String,required:false},
+        language:{type:String,required:false},
+        nickName:{type:String,required:false},
+        province:{type:String,required:false},
+        gender:{type:String,required:false},
+        gender:{type:String,required:false}
     },
-    userinfo:{
-        account:{type:String,required:true,},
-        appellation:{type:String,required:false,default:""},
-        phoneNumber:{type:String,required:false,default:""},
-        address:{type:String,required:false,default:""},
-        qq:{type:String,required:false,default:""},
-        leave:{type:String,required:false,default:""},
-        onlysee:{type:String,required:false,default:""},
-        userimg:{type:String,required:false,default:""}
+    article:{
+        areadata:{type:Array,required:true,},
+        arttext:{type:String,required:false,default:""},
+        imagesArr:{type:Array,required:false,default:""},
+        openidu:{type:String,required:false,default:""},
+        like:{type:Array,required:false},
+        see:{type:Number,required:false,default:0},
+        translate:{type:Object,required:false}  
     },
     messages:{
         account:{type:String,required:true},
