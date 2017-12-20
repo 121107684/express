@@ -15,20 +15,26 @@ router.post('/addnew', function (req, res, next) {
 router.post("/articlelist", function (req, res, next) {
   var sqlwhere = req.body.searchdata || {}
   let users = {}
-  const article = global.usersdb.getModel('article');
   const usertab = global.usersdb.getModel('usertab');
   usertab.find(sqlwhere, function (err, doc) {
     users=doc
   })
-  article.find(sqlwhere, function (err, doc) {
-    console.log(doc)
-    for(var i=0;i<doc.length;i++){
-      console.log(doc[i])
-    }
+  article.find({}).populate('usertab').exec(function(err,doc){
     var usererror = { "code": 200, "text": "查询成功", data: doc };
     res.send(usererror);
-
   }).limit(req.body.size).skip(req.body.index)
+
+
+
+  // article.find(sqlwhere, function (err, doc) {
+  //   console.log(doc)
+  //   for(var i=0;i<doc.length;i++){
+  //     console.log(doc[i])
+  //   }
+  //   var usererror = { "code": 200, "text": "查询成功", data: doc };
+  //   res.send(usererror);
+
+  // }).limit(req.body.size).skip(req.body.index)
 })
 
 

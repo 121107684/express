@@ -29,7 +29,8 @@ module.exports ={
         openidu:{type:String,required:false,default:""},
         like:{type:Array,required:false},
         see:{type:Number,required:false,default:0},
-        translate:{type:Object,required:false}  
+        translate:{type:Object,required:false},
+        times:{type:Number,default:Date.now()+(8*60*60*1000)}
     },
     messages:{
         account:{type:String,required:true},
