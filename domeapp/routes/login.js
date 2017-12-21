@@ -8,7 +8,6 @@ router.post('/login',function(req,res,next){
         if (!error && response.statusCode == 200) {
           console.log(body) // Show the HTML for the baidu homepage.
         }
-        console.log(body)
         var opidback =JSON.parse(body).openid
         var User = global.usersdb.getModel('usertab');
         User.findOne({openid:opidback},function(err,doc) {
@@ -17,7 +16,6 @@ router.post('/login',function(req,res,next){
                 res.send(usererror);
             }else if(!doc){
                 var datattt = {openid:opidback,...req.body.userinfo}
-                console.log(opidback)
                 User.create(datattt,function(err,doc){
                     var usererror ={"code":200, "text":"新用户创建成功","path":"login",data:doc};
                     res.send(usererror);

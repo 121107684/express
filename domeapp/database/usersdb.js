@@ -6,6 +6,12 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 var models = require('./models');
 
+
+
+
+for (var m in models){
+    mongoose.model(m , new schema(models[m]));
+}
 models.article.usertab = {
     type: schema.Types.ObjectId,
     ref: 'usertab'
@@ -14,11 +20,6 @@ models.usertab.article = {
     type: schema.Types.ObjectId,
     ref: 'article'
 }
-
-for (var m in models){
-    mongoose.model(m , new schema(models[m]));
-}
-
 module.exports = {
     getModel: function(type){
         return _getModel(type);
