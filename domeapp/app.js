@@ -18,6 +18,7 @@ const login = require('./routes/login');
 const users = require('./routes/users');
 const uploadfile = require('./routes/upload');
 const article = require('./routes/article');
+const programmerdate = require('./routes/programmerdate');
 
 const app = express(mongoose);
 
@@ -71,6 +72,7 @@ app.use('/login', login);
 app.use('/users', users);
 app.use('/uploadfile', uploadfile);
 app.use('/article', article);
+app.use('/programmerdate', programmerdate);
 
 
 // catch 404 and forward to error handler
