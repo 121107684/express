@@ -54,6 +54,14 @@
 </body>
 <script>
     (function ($) {
+        $.ajax({
+               url:'http://127.0.0.1:3000/programmerdate/getlist',
+               data:{name:'bai白云23'},
+               type: 'GET',
+               success: function(res){
+                  console.log(res)
+               }
+           })
         $("#login").on("click", function () {
             var forms = $("#userloginform")
            $.ajax({
@@ -75,7 +83,7 @@
             console.log($("#userImg")[0].files[0])
             $.ajax({
 				type:"post",
-				url:"http://127.0.0.1:8088/uploadfile/upimg",
+				url:"http://www.xuefengwx/uploadfile/upimg",
 				cache: false, 
 	            processData: false,  
 	            contentType: false,

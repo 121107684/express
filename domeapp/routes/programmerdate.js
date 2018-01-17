@@ -5,7 +5,8 @@ router.post('/updata', function (req, res, next) {
 
 })
 router.get("/getlist", function (req, res, next) {
-    var usertext = req.query.name.replace(/[^\u4e00-\u9fa5]/gi,"");
+    var usertext = req.query.name.replace(/[^\u4e00-\u9fa5-a-zA-Z-0-9]/gi,"");
+    console.log(usertext)
     var othertext = 0 
     for(var i = 0;i<usertext.length;i++){
         othertext += usertext.substr(i,1).charCodeAt();
@@ -26,7 +27,8 @@ router.get("/getlist", function (req, res, next) {
     var iday = today.getFullYear() * 1000 + (today.getMonth() + 1) * 100 + today.getDate()+othertext;
 
     var weeks = ["日", "一", "二", "三", "四", "五", "六"];
-    var directions = ["北方", "东北方", "东方", "东南方", "南方", "西南方", "西方", "西北方"];
+    var weeksen = ["Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat"];
+    var directions = ["大吉", "小吉", "吉", "万事大吉", "大胸", "小胸", "凶巴巴", "算了"];
     var activities = [
         { name: "写单元测试", good: "写单元测试将减少出错", bad: "写单元测试会降低你的开发效率" },
         { name: "洗澡", good: "你几天没洗澡了？", bad: "会把设计方面的灵感洗掉", weekend: true },
@@ -74,7 +76,13 @@ router.get("/getlist", function (req, res, next) {
     }
     
     function getTodayString() {
-        return "今天是" + today.getFullYear() + "年" + (today.getMonth() + 1) + "月" + today.getDate() + "日 星期" + weeks[today.getDay()];
+        let dates = {
+            yearmonth: today.getFullYear() + "年" + (today.getMonth() + 1) + "月",
+            day:today.getDate(),
+            week:weeks[today.getDay()],
+            weeken:weeksen[today.getDay()]
+        }
+        return dates;
     }
     
     function star(num) {
