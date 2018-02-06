@@ -3,7 +3,6 @@ const router = express.Router();
 const request = require('request');
 
 router.post('/login',function(req,res,next){
-    //console.log('https://api.weixin.qq.com/sns/jscode2session?appid=wx1240577fef2af12c&secret=0e2d5de2631d3af4dcb3d123de01c553&js_code='+req.body.jscode+'&grant_type=authorization_code');
     request('https://api.weixin.qq.com/sns/jscode2session?appid=wx1240577fef2af12c&secret=0e2d5de2631d3af4dcb3d123de01c553&js_code='+req.body.jscode+'&grant_type=authorization_code', function (error, response, body) {  
     // if (!error && response.statusCode == 200) {
     //       console.log(body) // Show the HTML for the baidu homepage.

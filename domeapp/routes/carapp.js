@@ -30,9 +30,9 @@ router.post('/addgo', function (req, res, next) {
     })
 })
 router.post('/adduser', function (req, res, next) {
-    console.log(req.body);
+    console.log({...req.body.data});
     var User = global.usersdb.getModel('usertab');
-    User.update({openid : req.body.token},{$set :{...req.body.data}},function(doc,err){
+    User.update({openid : req.body.token},{$set:{...req.body.data}},function(doc,err){
         console.log(doc,err)
     })
 })
