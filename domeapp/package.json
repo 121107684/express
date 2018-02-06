@@ -16,6 +16,7 @@
     "ejs": "^2.5.7",
     "express": "~4.15.5",
     "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
     "hooks-fixed": "^2.0.2",
     "jade": "~1.11.0",
     "kareem": "^1.5.0",

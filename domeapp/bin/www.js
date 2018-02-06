@@ -7,7 +7,13 @@
 var app = require('../app');
 var debug = require('debug')('domeapp:server');
 var http = require('http');
-
+var https = require("https");
+var fs = require("fs")
+console.log(__dirname)
+const options = {
+  key: fs.readFileSync(__dirname+'/www.xunfengwx.com.key'),
+  cert: fs.readFileSync(__dirname+'/www.xunfengwx.com.crt')
+};
 /**
  * Get port from environment and store in Express.
  */
