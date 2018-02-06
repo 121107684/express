@@ -30,9 +30,16 @@ router.post('/addgo', function (req, res, next) {
     })
 })
 router.post('/adduser', function (req, res, next) {
-    console.log({...req.body.data});
+   // console.log({...req.body.data});
+    let updata = {
+        age:req.body.data.age,
+        carcode:req.body.data.carcode,
+        cartype:req.body.data.cartype,
+        phonenum:req.body.data.phonenum,
+        usernametrue:req.body.data.usernametrue
+    }
     var User = global.usersdb.getModel('usertab');
-    User.update({openid : req.body.token},{$set:{...req.body.data}},function(doc,err){
+    User.update({openid : req.body.token},{$set:updata},function(doc,err){
         console.log(doc,err)
     })
 })
