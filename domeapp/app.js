@@ -19,6 +19,7 @@ const users = require('./routes/users');
 const uploadfile = require('./routes/upload');
 const article = require('./routes/article');
 const programmerdate = require('./routes/programmerdate');
+const carapp = require('./routes/carapp');
 
 const app = express(mongoose);
 
@@ -57,15 +58,18 @@ app.all('*',function (req, res, next) {
   }
 });
 
-// app.use(session({
-//   cookie: {maxAge:Settings.cookietime},
-//   secret: Settings.COOKIE_SECRET
-// }));
+ app.use(session({
+    resave: true,  // 新增
+    saveUninitialized: true,  // 新增
+    cookie: {maxAge:Settings.cookietime},
+    secret: Settings.COOKIE_SECRET
+ }));
 //文件上传
 app.use(multer({dest:'./uploadimgfile'}));
-
+//global.dbcar = mongoose.connect(Settings.URLCAR,{useMongoClient:true});
+//global.db = mongoose.connect(Settings.URL,{useMongoClient:true});
+global.db = mongoose.connect('mongodb://rootadminby:baiyangadmin311@180.76.249.237:27017/nodedb',{useMongoClient:true});
 global.usersdb = require('./database/usersdb.js');
-global.db = mongoose.connect(Settings.URL,{useMongoClient:true});
 
 app.use('/', index);
 app.use('/login', login);
@@ -73,6 +77,7 @@ app.use('/users', users);
 app.use('/uploadfile', uploadfile);
 app.use('/article', article);
 app.use('/programmerdate', programmerdate);
+app.use('/carapp', carapp);
 
 
 // catch 404 and forward to error handler

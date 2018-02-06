@@ -20,7 +20,12 @@ module.exports ={
         nickName:{type:String,required:false},
         province:{type:String,required:false},
         gender:{type:String,required:false},
-        gender:{type:String,required:false}
+        usernametrue:{type:String,required:false},
+        age:{type:String,required:false},
+        cartype:{type:String,required:false},
+        phonenum:{type:String,required:false},
+        carcode:{type:String,required:false},
+        creattime:{type:Number,default:Date.now()+(8*60*60*1000)}
     },
     article:{
         areadata:{type:Array,required:true,},
@@ -40,57 +45,25 @@ module.exports ={
         adminText:{type:String,required:false},
         adminTime:{type:Date,default:Date.now}
     },
-    htmlparser:{
-        account:{type:String,required:true},
-        htmlName:{type:String},
-        htmlLogoUrlClass:{type:String},
-        htmlurl:{type:String},
-       // htmlTime:{type:Date,default:new Date(Date.now()+(8*60*60*1000)).getTime()},
-        htmlTime:{type:Number,default:Date.now()+(8*60*60*1000)},
-        htmlNum:{type:Number,default:0},
-        toUrl:{type:String},
+    cartimelist:{
+        id:{type:String,required:true},
+        departure:{type:String,required:true},
+        destination:{type:String,required:true},
+        seatnum:{type:String,required:true},
+        place:{type:String,required:true},
+        date:{type:String,required:true},
+        time:{type:String,required:true},
+        memo:{type:String,required:true},
+        arrindex:{type:Number,required:true},
+        statetime:{type:Number,required:true},
+        creattime:{type:Number,default:Date.now()+(8*60*60*1000)}
     },
-    htmlcontent:{
-        account:{type:String,required:true,ref:'htmlparser'},
-        htmlForm:{type:String},
-        htmlUrl:{type:String},
-        htmlTitle:{type:String},
-        htmlcontents:{type:String},
-        htmllike:{type:[Number],default:0},
-        htmlUnlike:{type:[Number],default:0},
-        htmlReadNum:{type:[Number],default:0},
-        htmldate:{type:Number,default:Date.now()},
-        htmlTop:{type:Boolean,default:false}
-    },
-    moviesinfo:{
-        movieId:{type:String},
-        movieImg:{type:String},
-        movieTitle:{type:String},
-        movieDirector:{type:String},
-        movieProtagonist:{type:[]},
-        movieType:{type:[]},
-        movieCountry:{type:String},
-        movieFirst:{type:String},
-        movieLong:{type:String},
-        movieRating:{type:String},
-        movieStory:{type:String},
-        moviePoster:{type:[]},
-        inCinemaId:{type:[]}
-    },
-    cinemalist:{
-        uid:{type:String},
-        name:{type:String},
-        address:{type:String},
-        alias:{type:String},
-        city:{type:String},
-        area:{type:String},
-        longitude:{type:String},
-        latitude:{type:String},
-        shopHours:{type:String},
-        overallRating:{type:String},
-        lowestGoodPrice:{type:String},
-        lowestOrderPrice:{type:String},
-        phone:{type:String}
+    carusername:{
+        usernametrue:{type:String,required:true},
+        age:{type:String,required:true},
+        cartype:{type:String,required:true},
+        phonenum:{type:String,required:true},
+        carcode:{type:String,required:true}
     }
 };
 
