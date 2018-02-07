@@ -1,6 +1,19 @@
 var express = require('express');
 var router = express.Router();
-
+router.get("/addressblock",function(req,res,next){
+    var backobj = [{
+        name:"北京——怀来",
+        about:"今天天气不错哦！今天天气不错哦！",
+        backimg:"bjhlbg.jpg",
+        id:"bjhl"
+    },{
+        name:"测试——测试",
+        about:"今天心情不错哦！",
+        backimg:"bjhlbg.jpg",
+        id:"cscs"
+    }]
+    res.send({"code":200, "errormsg":"",data:backobj});
+})
 router.get("/getuserinfo",function(req,res,next){
     let pdata = req.query.token;
     console.log(pdata)
