@@ -9,7 +9,7 @@ router.post('/login',function(req,res,next){
     //       return false;
     //     }
         var opidback =JSON.parse(body).openid;
-        console.log(req.session)
+        //console.log(req.session)
         if(req.session.sign){
             console.log(req.session)
         }else{

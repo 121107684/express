@@ -53,23 +53,55 @@ router.post('/adduser', function (req, res, next) {
     }
     var User = global.usersdb.getModel('usertab');
     User.update({openid : req.body.token},{$set:updata},function(doc,err){
-        console.log(doc,err)
+        res.send({"code":200, "errormsg":"操作成功",data:doc});
     })
 })
 router.get('/carlist', function (req, res, next) {
     let pdata = JSON.parse(req.query.data)
     let cartimelist = global.usersdb.getModel('cartimelist');
-    var totalnum = -1
-    cartimelist.count({},function(err,doc){
-        totalnum = doc
+    var User = global.usersdb.getModel('usertab');
+    const backdata = {}
+    const getcars = function(pdata){
+        var p = new Promise(function(resolve, reject){
+            cartimelist.find({},function(err,doc){
+                backdata.car = doc
+                resolve(backdata.car)
+            }).limit(pdata.limit).skip((pdata.index - 1) * pdata.limit)
+        })
+        return p
+    }
+    let getuser = function(cars){
+        var p = new Promise(function(resolve, reject){
+            let temarr = [];
+            for(i in cars){
+                if(temarr.indexOf(cars[i].id)<0){
+                    temarr.push(cars[i].id)
+                }
+            }
+            User.find({openid:{$in:temarr}},{_id:0},function(err,doc){
+                backdata.users = doc
+                resolve()
+            })
+        })
+        return p
+    }
+    let getallcar = function(data){
+        var p = new Promise(function(resolve, reject){
+            cartimelist.count({},function(err,doc){
+                backdata.total = doc
+                resolve()
+            })
+        })
+        return p
+    }
+    getcars(pdata).then(function(cars){
+        return getuser(cars)
+    }).then(function(data){
+        return getallcar()
+    }).then(function(){
+        console.log(backdata)
+        res.send({"code":200, "errormsg":"",data:backdata});   
     })
-    cartimelist.find({},function(err,doc){
-        res.send({"code":200, "errormsg":"",data:doc,"total":totalnum});
-    }).limit(pdata.limit).skip((pdata.index - 1) * pdata.limit);
-    // var User = global.usersdb.getModel('usertab');
-    // User.update({openid : req.body.token},{$set :{...req.body.data}},function(doc,err){
-    //     console.log(doc,err)
-    // })
 })
 router.get('/carinfo', function (req, res, next) {
     let pdata = JSON.parse(req.query.data);
