@@ -18,9 +18,33 @@ router.get("/getuserinfo",function(req,res,next){
     let pdata = req.query.token;
     console.log(pdata)
     var User = global.usersdb.getModel('usertab');
-    User.findOne({openid:pdata},function(err,doc){
-        console.log(doc)
+    User.findOne({openid:pdata},{usernametrue:1,age:1,cartype:1,phonenum:1,carcode:1,_id:0},function(err,doc){
+        res.send({"code":200, "errormsg":"为保障服务质量，请删除无用数据",data:doc});
     }) 
+})
+router.get("/getuserpage",function(req,res,next){
+    let pdata =  req.query.token;
+    console.log(pdata)
+    var cartimelist = global.usersdb.getModel('cartimelist');
+    cartimelist.find({id:pdata},function(err,doc){
+        res.send({"code":200, "errormsg":"查询成功",data:doc});
+    }) 
+})
+router.get("/getolddata",function(req,res,next){
+    let pdata = JSON.parse(req.query.data).id
+    console.log(pdata)
+    var cartimelist = global.usersdb.getModel('cartimelist');
+    cartimelist.findOne({_id:pdata},function(err,doc){
+        res.send({"code":200, "errormsg":"查询成功",data:doc});
+    }) 
+})
+router.post("/cardel",function(req,res,next){
+    let pdata = req.body;
+    console.log(pdata)
+    var cartimelist = global.usersdb.getModel('cartimelist');
+    cartimelist.remove({_id:pdata.data.id,id:pdata.token},function(err,doc){
+         res.send({"code":200, "title":"删除成功",data:doc});
+     }) 
 })
 router.post('/addgo', function (req, res, next) {
     console.log(req.body);
@@ -126,7 +150,6 @@ router.get('/carinfo', function (req, res, next) {
     }
 
     Promise.all([getuser(pdata.userid),getcar(pdata.carid)]).then(function(data){
-            console.log(data)
             backdata.user = data[0];
             backdata.car = data[1];
             res.send({"code":200, "errormsg":"",data:backdata})
