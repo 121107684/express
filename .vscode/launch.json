@@ -5,12 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "type": "node",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceRoot}",
-            "runtimeExecutable":"D:/Program Files (x86)/Google/Chrome/Application/chrome.exe"            
+            "name": "启动调试",
+            "program": "${workspaceRoot}/domeapp/bin/www"
         }
     ]
 }

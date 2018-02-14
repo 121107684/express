@@ -17,18 +17,27 @@ router.get("/addressblock", function (req, res, next) {
 router.get("/getuserinfo", function (req, res, next) {
     let pdata = req.query.token;
     console.log(pdata)
-    var User = global.usersdb.getModel('usertab');
-    User.findOne({ openid: pdata }, { usernametrue: 1, age: 1, cartype: 1, phonenum: 1, carcode: 1, _id: 0 }, function (err, doc) {
-        res.send({ "code": 200, "errormsg": "为保障服务质量，请删除无用数据", data: doc });
-    })
+    if(pdata==""){
+        res.send({"code": 202, "errormsg": "请登录"});
+    }else{
+        var User = global.usersdb.getModel('usertab');
+        User.findOne({ openid: pdata }, { usernametrue: 1, age: 1, cartype: 1, phonenum: 1, carcode: 1, _id: 0 }, function (err, doc) {
+            res.send({ "code": 200, "errormsg": "为保障服务质量，请删除无用数据", data: doc });
+        })
+    }
 })
 router.get("/getuserpage", function (req, res, next) {
     let pdata = req.query.token;
     console.log(pdata)
-    var cartimelist = global.usersdb.getModel('cartimelist');
-    cartimelist.find({ id: pdata }, function (err, doc) {
-        res.send({ "code": 200, "errormsg": "查询成功", data: doc });
-    })
+    if(pdata==""){
+        res.send({"code": 202, "errormsg": "请登录"});
+    }else{
+        var cartimelist = global.usersdb.getModel('cartimelist');
+        cartimelist.find({ id: pdata }, function (err, doc) {
+            res.send({ "code": 200, "errormsg": "查询成功", data: doc });
+        })
+    }
+    
 })
 router.get("/getolddata", function (req, res, next) {
     let pdata = JSON.parse(req.query.data).id
@@ -41,7 +50,7 @@ router.get("/getolddata", function (req, res, next) {
         date: 1,
         time: 1,
         memo: 1,
-        array: 1,
+        arrindex: 1,
         _id: 1
     }
     var cartimelist = global.usersdb.getModel('cartimelist');
@@ -104,9 +113,13 @@ router.post('/adduser', function (req, res, next) {
         usernametrue: req.body.data.usernametrue
     }
     var User = global.usersdb.getModel('usertab');
-    User.update({ openid: req.body.token }, { $set: updata }, function (doc, err) {
-        res.send({ "code": 200, "errormsg": "操作成功", data: doc });
-    })
+    if(req.body.token==""){
+        res.send({ "code": 200, "errormsg": "请登录操作", data: doc });
+    }else{
+        User.update({ openid: req.body.token }, { $set: updata }, function (doc, err) {
+            res.send({ "code": 200, "errormsg": "操作成功", data: doc });
+        })
+    }
 })
 router.get('/carlist', function (req, res, next) {
     let pdata = JSON.parse(req.query.data)
@@ -115,7 +128,8 @@ router.get('/carlist', function (req, res, next) {
     const backdata = {}
     const getcars = function (pdata) {
         var p = new Promise(function (resolve, reject) {
-            cartimelist.find({}, function (err, doc) {
+            var nowtime = new Date().getTime();
+            cartimelist.find({'$or':[{'statetime':{'$gte':nowtime}},{'arrindex':{$in:[1,2,3]}}]},function (err, doc) {
                 backdata.car = doc
                 resolve(backdata.car)
             }).limit(pdata.limit).skip((pdata.index - 1) * pdata.limit)
@@ -139,7 +153,8 @@ router.get('/carlist', function (req, res, next) {
     }
     let getallcar = function (data) {
         var p = new Promise(function (resolve, reject) {
-            cartimelist.count({}, function (err, doc) {
+            var nowtime = new Date().getTime();
+            cartimelist.count({'$or':[{'statetime':{'$gte':nowtime}}]}, function (err, doc) {
                 backdata.total = doc
                 resolve()
             })
